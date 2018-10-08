@@ -1,0 +1,14 @@
+sitemap koffer label="Deutsche Fildertechnologie" {
+    Text item=LocalTime label="Systemzeit"    
+    Switch item=Lamp_Kitchen
+    Switch item=RELAIS_1 label="230V Lampe (K1)"
+    Switch item=RELAIS_2 label="12V Lampe (K2)"
+    Switch item=RELAIS_3 label="Steckdose (K3)"
+    Switch item=RELAIS_4
+
+    Text item=CONTACT_1
+    Text item=CONTACT_2
+    Text item=CONTACT_3
+    Text item=CONTACT_4
+}
+

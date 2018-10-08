@@ -1,0 +1,32 @@
+Login: openhabian
+Pw: openhabian
+
+Logbuch mitlesen:
+
+tail -f /var/log/openhab2/openhab.log
+
+Dienst restarten:
+
+sudo systemctl restart openhab2.service
+
+steps done
+
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install openhab2
+sudo apt-get install openhab2-addons
+
+changed hostname to "filderkoffer"
+
+https://www.elektronik-kompendium.de/sites/raspberry-pi/2007021.htm
+
+changed /etc/openhab2/services/addons.cfg entry "package=expert"
+
+add-ons
+basic ui installed
+
+GPIO binding installed
+
+NTP binding installed
+
+NTP thing added

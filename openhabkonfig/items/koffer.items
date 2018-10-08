@@ -1,0 +1,34 @@
+String LocalTime "Uhrzeit" <clock> (NTP) {
+	channel="ntp:ntp:local:string" }
+
+Switch RELAIS_1 "Relais 1" <light> (System) {
+	gpio="pin:17 initialValue:high activelow:yes"
+}
+Switch RELAIS_2 "Relais 2" <light> (System) {
+	gpio="pin:18 initialValue:high activelow:yes"
+}
+Switch RELAIS_3 "Relais 3" <light> (System) {
+	gpio="pin:27 initialValue:high activelow:yes"
+}
+Switch RELAIS_4 "Relais 4" <light> (System) {
+	gpio="pin:22 initialValue:high activelow:yes"
+}
+
+Switch Lamp_Kitchen "Küchenlampe 230V" <light> (System)
+
+
+Contact CONTACT_1 "Küchenlicht 230V eingeschaltet[MAP(contact.map):%s]" <light> (System) {
+	gpio="pin:23 activelow:yes"
+}
+
+Contact CONTACT_2 "Taster Links (Küchenlicht 12V) [MAP(contact.map):%s]" <light> (System) {
+	gpio="pin:24 activelow:yes"
+}
+
+Contact CONTACT_3 "Taster Rechts [MAP(contact.map):%s]" <light> (System) {
+	gpio="pin:25 activelow:yes"
+}
+
+Contact CONTACT_4 "Kontakt 4 (unused) [MAP(contact.map):%s]" <light> (System) {
+	gpio="pin:8 activelow:yes"
+}

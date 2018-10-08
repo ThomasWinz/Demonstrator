@@ -1,0 +1,48 @@
+rule "12V Lampe ein/aus"
+when
+	Item CONTACT_2 changed from CLOSED to OPEN
+then 
+	if (RELAIS_2.state != OFF) {
+		sendCommand(RELAIS_2, OFF)
+		logInfo("Switches","12V Lampe aus")	
+	} else {
+		sendCommand(RELAIS_2, ON)
+		logInfo("Switches","12V Lampe ein")	
+	}	
+end
+
+rule "Kuechenlampe Kontakt"
+when
+	Item CONTACT_1 changed
+then
+	if (CONTACT_1.state == OPEN && Lamp_Kitchen.state == OFF) {
+		postUpdate(Lamp_Kitchen, ON)
+		logInfo("Switches","Update Kueche ist an")
+	} else if (CONTACT_1.state == CLOSED && Lamp_Kitchen.state == ON) {
+		postUpdate(Lamp_Kitchen, OFF)
+		logInfo("Switches","Update Kueche ist aus")
+	}
+end
+
+rule "Kuechenlampe 230V einschalten"
+when
+	Item Lamp_Kitchen changed
+then
+	if (CONTACT_1.state != OPEN && Lamp_Kitchen.state == ON) {
+		if (RELAIS_1.state != OFF) {
+			sendCommand(RELAIS_1, OFF)
+			logInfo("Switches","230V Lampe ein A")	
+		} else {
+			sendCommand(RELAIS_1, ON)
+			logInfo("Switches","230V Lampe ein B")	
+		}
+	} else if (CONTACT_1.state != CLOSED && Lamp_Kitchen.state == OFF) {
+		if (RELAIS_1.state != OFF) {
+			sendCommand(RELAIS_1, OFF)
+			logInfo("Switches","230V Lampe aus A")	
+		} else {
+			sendCommand(RELAIS_1, ON)
+			logInfo("Switches","230V Lampe aus B")	
+		}
+	}
+end
