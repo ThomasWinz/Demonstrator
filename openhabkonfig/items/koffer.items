@@ -1,11 +1,15 @@
-String LocalTime "Uhrzeit" <clock> (NTP) {
+
+
+Switch GUI_SWITCH_AQUA_COLOR "Aqarium Bunt" <colorlight> (Aquarium) [ "Lighting" ] {
+	udp=">[ON:127.0.0.1:1234:8_0!],>[OFF:127.0.0.1:1234:8_1!]"
+}String LocalTime "Uhrzeit" <clock> (NTP) {
 	channel="ntp:ntp:local:string" }
 
 Switch RELAIS_1 "Relais 1" <light> (System) {
 	gpio="pin:17 initialValue:high activelow:yes"
 }
 Switch RELAIS_2 "Relais 2" <light> (System) {
-	gpio="pin:18 initialValue:high activelow:yes"
+	gpio="pin:12 initialValue:high activelow:yes"
 }
 Switch RELAIS_3 "Relais 3" <light> (System) {
 	gpio="pin:27 initialValue:high activelow:yes"
@@ -31,4 +35,10 @@ Contact CONTACT_3 "Taster Rechts [MAP(contact.map):%s]" <light> (System) {
 
 Contact CONTACT_4 "Kontakt 4 (unused) [MAP(contact.map):%s]" <light> (System) {
 	gpio="pin:8 activelow:yes"
+}
+
+Color LEDcolor "LEDcolor (RGB Values)" <video> (G1F)
+
+String TEST_COLOR_STRING "Test Farbe" {
+	udp=">[*:127.0.0.1:12551:default]"
 }

@@ -7,3 +7,5 @@ pscp.exe -pw openhabian ..\openhabkonfig\sitemaps\*.sitemap openhabian@filderkof
 pscp.exe -pw openhabian ..\openhabkonfig\rules\*.rules openhabian@filderkoffer:/etc/openhab2/rules
 
 pscp.exe -pw openhabian ..\openhabkonfig\maps\*.map openhabian@filderkoffer:/etc/openhab2/transform
+
+pscp.exe -pw openhabian ..\openhabkonfig\cfg\*.cfg openhabian@filderkoffer:/etc/openhab2/services

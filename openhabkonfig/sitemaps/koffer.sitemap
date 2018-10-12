@@ -10,5 +10,8 @@ sitemap koffer label="Deutsche Fildertechnologie" {
     Text item=CONTACT_2
     Text item=CONTACT_3
     Text item=CONTACT_4
+
+    Colorpicker item=LEDcolor icon="colorwheel"
+    Text item=TEST_COLOR_STRING label="Test Farbe [%s]"
 }
 

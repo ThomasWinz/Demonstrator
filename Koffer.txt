@@ -9,7 +9,17 @@ Dienst restarten:
 
 sudo systemctl restart openhab2.service
 
-steps done
+Applikation als root ausführen:
+
+sudo chown root:root test
+sudo chmod 4775 test
+
+
+
+steps done:
+
+
+
 
 sudo apt-get update
 sudo apt-get upgrade
