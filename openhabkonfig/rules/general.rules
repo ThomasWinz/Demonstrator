@@ -1,3 +1,16 @@
+rule "Steckdose ein/aus"
+when
+	Item CONTACT_3 changed from CLOSED to OPEN
+then 
+	if (RELAIS_3.state != OFF) {
+		sendCommand(RELAIS_3, OFF)
+		logInfo("Switches","Steckdose aus")	
+	} else {
+		sendCommand(RELAIS_3, ON)
+		logInfo("Switches","Steckdose ein")	
+	}	
+end
+
 rule "12V Lampe ein/aus"
 when
 	Item CONTACT_2 changed from CLOSED to OPEN
