@@ -13,5 +13,7 @@ sitemap koffer label="Deutsche Fildertechnologie" {
 
     Colorpicker item=LEDcolor icon="colorwheel"
     Text item=TEST_COLOR_STRING label="Test Farbe [%s]"
+
+    Switch item=LED_SERVER_START
 }
 

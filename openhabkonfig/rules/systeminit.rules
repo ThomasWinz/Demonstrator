@@ -1,0 +1,15 @@
+rule "System Initialisierung"
+when 
+	System started
+then
+	sendCommand(LED_SERVER_START, ON)
+
+	var json = "{\"command\":\"clear\",\"priority\":100}"
+
+	logDebug("colors", json)
+	logInfo("Switches",json)
+
+	TEST_COLOR_STRING.sendCommand(json)
+
+	logInfo("SystemInitialisation","SystemInitialisation done")
+end

@@ -1,0 +1,1 @@
+Thing exec:command:startLEDserver  [ command="/home/openhabian/rpi_ws281x/LED_Server",  interval=0, autorun=false ]

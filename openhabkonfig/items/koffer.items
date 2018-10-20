@@ -1,8 +1,4 @@
-
-
-Switch GUI_SWITCH_AQUA_COLOR "Aqarium Bunt" <colorlight> (Aquarium) [ "Lighting" ] {
-	udp=">[ON:127.0.0.1:1234:8_0!],>[OFF:127.0.0.1:1234:8_1!]"
-}String LocalTime "Uhrzeit" <clock> (NTP) {
+String LocalTime "Uhrzeit" <clock> (NTP) {
 	channel="ntp:ntp:local:string" }
 
 Switch RELAIS_1 "Relais 1" <light> (System) {
@@ -42,3 +38,6 @@ Color LEDcolor "LEDcolor (RGB Values)" <video> (G1F)
 String TEST_COLOR_STRING "Test Farbe" {
 	udp=">[*:127.0.0.1:12551:default]"
 }
+
+Switch LED_SERVER_START       "LED Service" <network> (System) {
+channel="exec:command:startLEDserver:run" }
