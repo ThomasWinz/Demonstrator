@@ -11,10 +11,12 @@ sudo systemctl restart openhab2.service
 
 Applikation als root ausführen:
 
-sudo chown root:root test
-sudo chmod 4775 test
+sudo chown root:root LED_Server
+sudo chmod 4775 LED_Server
 
+WLAN Ad-Hoc Netzwerk:
 
+sudo service ifplugd stop; sudo ifconfig wlan0 down; sudo iwconfig wlan0 mode ad-hoc; sudo iwconfig wlan0 essid "Pi"; sudo iwconfig key "thomasthomasjulien"; sudo ifconfig wlan0 up; sudo service ifplugd start
 
 steps done:
 
@@ -40,3 +42,8 @@ GPIO binding installed
 NTP binding installed
 
 NTP thing added
+
+Exec Binding installed
+
+
+https://elinux.org/RPI-Wireless-Hotspot
