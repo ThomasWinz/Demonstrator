@@ -1,16 +1,16 @@
 rule "Set RGB Value"
 when
-    Item LEDcolor changed
+    Item LEDcolor_0 changed
 then    
     // Get RGB Values from hue as Integer - there must be a tidier way of doing this!
-    val redValue   = (Math::round((LEDcolor.state as HSBType).red.intValue)*2.5).intValue
-    val greenValue = (Math::round((LEDcolor.state as HSBType).green.intValue)*2.5).intValue
-    val blueValue  = (Math::round((LEDcolor.state as HSBType).blue.intValue)*2.5).intValue
+    val redValue   = (Math::round((LEDcolor_0.state as HSBType).red.intValue)*2.5).intValue
+    val greenValue = (Math::round((LEDcolor_0.state as HSBType).green.intValue)*2.5).intValue
+    val blueValue  = (Math::round((LEDcolor_0.state as HSBType).blue.intValue)*2.5).intValue
     
     // If any colour is above zero
     if (redValue + greenValue + blueValue > 0 ) {
         // build the string using above values then send it to our external script
-        var String json = String::format("{\"color\":[%1$d,%2$d,%3$d],\"command\":\"color\",\"priority\":100}", redValue, greenValue, blueValue)
+        var String json = String::format("{\"group\":[0],\"color\":[%1$d,%2$d,%3$d],\"command\":\"color\",\"priority\":100}", redValue, greenValue, blueValue)
 
         logDebug("colors", json)
      	logInfo("Switches",json)
@@ -18,11 +18,40 @@ then
      	TEST_COLOR_STRING.sendCommand(json)
     } else {
         // As the RGB values are unset, we want to clear (switch off static colour)
-        var json = "{\"command\":\"clear\",\"priority\":100}"
+        var json = "{\"group\":[0],\"command\":\"clear\",\"priority\":100}"
 
 		logDebug("colors", json)
 		logInfo("Switches",json)
 
 		TEST_COLOR_STRING.sendCommand(json)
+    }
+end
+
+rule "Set RGB Value"
+when
+    Item LEDcolor_1 changed
+then    
+    // Get RGB Values from hue as Integer - there must be a tidier way of doing this!
+    val redValue   = (Math::round((LEDcolor_1.state as HSBType).red.intValue)*2.5).intValue
+    val greenValue = (Math::round((LEDcolor_1.state as HSBType).green.intValue)*2.5).intValue
+    val blueValue  = (Math::round((LEDcolor_1.state as HSBType).blue.intValue)*2.5).intValue
+    
+    // If any colour is above zero
+    if (redValue + greenValue + blueValue > 0 ) {
+        // build the string using above values then send it to our external script
+        var String json = String::format("{\"group\":[1],\"color\":[%1$d,%2$d,%3$d],\"command\":\"color\",\"priority\":100}", redValue, greenValue, blueValue)
+
+        logDebug("colors", json)
+        logInfo("Switches",json)
+
+        TEST_COLOR_STRING.sendCommand(json)
+    } else {
+        // As the RGB values are unset, we want to clear (switch off static colour)
+        var json = "{\"group\":[1],\"command\":\"clear\",\"priority\":100}"
+
+        logDebug("colors", json)
+        logInfo("Switches",json)
+
+        TEST_COLOR_STRING.sendCommand(json)
     }
 end

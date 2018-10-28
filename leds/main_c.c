@@ -101,14 +101,68 @@ ws2811_led_t *matrix;
 
 static uint8_t running = 1;
 
-void matrix_render(uint32_t color)
+typedef struct st_group
 {
-    int x;
+	uint32_t start;
+	uint32_t stop;
+} st_group_t;
 
-    for (x = 0; x < width; x++)
+typedef enum en_groups
+{
+	en_group_0,
+	en_group_1,
+	sizeof_en_groups
+} en_groups_t;
+
+st_group_t groups[sizeof_en_groups] =
+{
+	{  // en_group_0
+		0,	// uint32_t start;
+		5	// uint32_t stop;
+	},
+	{  // en_group_1
+		6,	// uint32_t start;
+		100	// uint32_t stop;
+	}
+};
+
+
+void matrix_render(int32_t group, uint32_t color)
+{
+    uint32_t x;
+    uint32_t startGrp = 0;
+    uint32_t stopGrp = 0;
+    uint32_t forGrp = 0;
+
+    printf("render %i, %u\n", group, color);
+
+    if (sizeof_en_groups < group)
     {
-        ledstring.channel[0].leds[x] = color;
+    	return;
     }
+
+    /** @note -1 = set all groups */
+    if (-1 == group)
+    {
+    	startGrp = 0;
+    	stopGrp = sizeof_en_groups;
+    }
+    else
+    {
+    	startGrp = (uint32_t)group;
+    	stopGrp = (uint32_t)group + 1;
+    }
+
+    printf("startGrp stopGrp %u, %u\n", startGrp, stopGrp);
+
+    for (forGrp = startGrp; forGrp < stopGrp; forGrp++)
+    {
+	    for (x = groups[forGrp].start; x <= groups[forGrp].stop; x++)
+	    {
+	        ledstring.channel[0].leds[x] = color;
+	    }
+    }
+
 }
 
 void matrix_raise(void)
@@ -368,9 +422,9 @@ void parseargs(int argc, char **argv, ws2811_t *ws2811)
 	}
 }
 
-void Set_Color(uint32_t color)
+void Set_Color(int32_t group, uint32_t color)
 {
-	matrix_render(color);
+	matrix_render(group, color);
 
 	int32_t ret = -1;
 
@@ -409,7 +463,7 @@ int main_c(int argc, char *argv[])
         //matrix_bottom();
         for (uint32_t i = 0; 2 > i; i++)
         {
-        	matrix_render(dotcolors[i]);
+        	matrix_render(-1, dotcolors[i]);
 
 	        if ((ret = ws2811_render(&ledstring)) != WS2811_SUCCESS)
 	        {

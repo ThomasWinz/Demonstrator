@@ -13,7 +13,7 @@
 #include <string.h>
 
 extern "C" int main_c(int argc, char *argv[]);
-extern "C" void Set_Color(uint32_t color); // 0xWWRRGGBB
+extern "C" void Set_Color(int32_t group, uint32_t color); // 0xWWRRGGBB
 
 #define LOCAL_SERVER_PORT 12551
 
@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
 
 	    if (-1 == n) 
 	    {
-	      sleep(1);
+	      sleep(0);
 	    }
 	    else if (n > 0) { 
 		      /* Zeitangaben präparieren */
@@ -90,40 +90,54 @@ int main(int argc, char *argv[])
 		      std::string givenString;
 		      givenString.assign(puffer);
 
-			  int32_t pos = givenString.find("],\"command\":\"color\"");
+			  std::string searchStringGroupPos = "{\"group\":[";
 
-			  if (0 < pos)
+			  std::string searchStringGroupPosEnd = "],\"color\":";
+
+			  int32_t groupPos = givenString.find(searchStringGroupPos) + searchStringGroupPos.size();
+
+			  int32_t groupPosEnd = givenString.find(searchStringGroupPosEnd);
+
+			  std::string groupString = givenString.substr(groupPos, groupPosEnd - groupPos);
+
+			  int32_t value_Group = std::stoi(groupString);
+
+			  int32_t colorPosEnd = givenString.find("],\"command\":\"color\"");
+
+			  std::string searchstringColorPos = ",\"color\":[";
+
+			  int32_t colorPos = givenString.find(searchstringColorPos) + searchstringColorPos.size();
+
+			  if (0 < colorPosEnd)
 			  {
-				std::string valueString = givenString.substr(10, pos-10);
+				  std::string valueString = givenString.substr(colorPos, colorPosEnd - colorPos);
 
-				std::string valueString_R = valueString.substr(0, valueString.find_first_of(","));
+				  std::string valueString_R = valueString.substr(0, valueString.find_first_of(","));
 
-				std::string valueString_G = valueString.substr(valueString.find_first_of(",") + 1, valueString.find_last_of(",") - valueString.find_first_of(",") - 1);
+				  std::string valueString_G = valueString.substr(valueString.find_first_of(",") + 1, valueString.find_last_of(",") - valueString.find_first_of(",") - 1);
 
-				std::string valueString_B = valueString.substr(valueString.find_last_of(",") + 1, valueString.size() - valueString.find_last_of(","));
+				  std::string valueString_B = valueString.substr(valueString.find_last_of(",") + 1, valueString.size() - valueString.find_last_of(","));
 
-				int32_t value_R = std::stoi(valueString_R);
+				  int32_t value_R = std::stoi(valueString_R);
 
-				int32_t value_G = std::stoi(valueString_G);
+				  int32_t value_G = std::stoi(valueString_G);
 
-				int32_t value_B = std::stoi(valueString_B);
+				  int32_t value_B = std::stoi(valueString_B);
 
-				printf("extracted colors: %x %x %x \n", value_R, value_G, value_B);
-
-				uint32_t value = (((uint32_t)value_B) << 16)
+				  uint32_t value = (((uint32_t)value_B) << 16)
 				      + (((uint32_t)value_G) << 8)
 				      + (((uint32_t)value_R) << 0);
 
-			    Set_Color(value);
-			}
-			else
-			{
-		  		Set_Color(0);
-			}
+			      Set_Color(value_Group, value);
+			  }
+			  else
+			  {
+			      Set_Color(value_Group, 0);
+			  }
 	    }
 	}
 
-	Set_Color(0x00123456);
+	Set_Color(-1, 0x00123456);
 
 	return 0;
 }

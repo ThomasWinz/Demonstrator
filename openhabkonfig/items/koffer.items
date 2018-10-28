@@ -33,7 +33,8 @@ Contact CONTACT_4 "Kontakt 4 (unused) [MAP(contact.map):%s]" <light> (System) {
 	gpio="pin:8 activelow:yes"
 }
 
-Color LEDcolor "LEDcolor (RGB Values)" <video> (G1F)
+Color LEDcolor_0 "LEDcolor 0 (RGB Values)" <video> (G1F)
+Color LEDcolor_1 "LEDcolor 1 (RGB Values)" <video> (G1F)
 
 String TEST_COLOR_STRING "Test Farbe" {
 	udp=">[*:127.0.0.1:12551:default]"
